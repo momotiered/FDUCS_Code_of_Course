@@ -1,0 +1,38 @@
+# 以下是可能有用的gadget字节码，可以使用 ./find_gadget.sh "字节码" 命令查找
+
+# ------------------ 读取/设置寄存器值 ------------------
+
+# 将栈指针保存到寄存器
+"48 89 e0 c3"     # mov %rsp, %rax; ret
+"48 89 e2 c3"     # mov %rsp, %rdx; ret
+"48 89 e1 c3"     # mov %rsp, %rcx; ret
+
+# pop值到各种寄存器
+"58 c3"           # pop %rax; ret
+"5a c3"           # pop %rdx; ret
+"59 c3"           # pop %rcx; ret
+"5f c3"           # pop %rdi; ret (直接设置第一个参数)
+
+# ------------------ 寄存器间移动 ------------------
+
+# 各种寄存器到rdi的移动（传递参数） 
+"48 89 c7 c3"     # mov %rax, %rdi; ret
+"48 89 d7 c3"     # mov %rdx, %rdi; ret
+"48 89 cf c3"     # mov %rcx, %rdi; ret
+
+# ------------------ 四则运算 ------------------
+
+# 增加寄存器的值
+"48 83 c0 xx c3"  # add $0xXX, %rax; ret (xx为偏移值)
+"48 83 c2 xx c3"  # add $0xXX, %rdx; ret (xx为偏移值)
+"48 83 c1 xx c3"  # add $0xXX, %rcx; ret (xx为偏移值)
+
+# 减少寄存器的值
+"48 83 e8 xx c3"  # sub $0xXX, %rax; ret (xx为偏移值)
+"48 83 ea xx c3"  # sub $0xXX, %rdx; ret (xx为偏移值)
+"48 83 e9 xx c3"  # sub $0xXX, %rcx; ret (xx为偏移值)
+
+# ------------------ 复合gadget ------------------
+
+# 复合gadget可能更难找到，但通常更强大
+"48 89 e0 48 83 c0 xx 48 89 c7 c3" # mov %rsp,%rax; add $0xXX,%rax; mov %rax,%rdi; ret 

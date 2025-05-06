@@ -1,0 +1,24 @@
+## 编译与运行(防止中文编码出错)
+
+### 编译
+```
+javac -encoding UTF-8 -d bin src/*.java
+```
+
+### 运行
+
+Windows PowerShell:
+```
+$env:JAVA_TOOL_OPTIONS="-Dfile.encoding=UTF-8"; java -cp bin ChessGame
+```
+
+Windows CMD:
+```
+set JAVA_TOOL_OPTIONS=-Dfile.encoding=UTF-8
+java -cp bin ChessGame
+```
+
+Linux/Mac系统:
+```
+export JAVA_TOOL_OPTIONS="-Dfile.encoding=UTF-8"
+java -cp bin ChessGame
